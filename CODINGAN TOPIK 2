@@ -1,0 +1,151 @@
+# MONITORING & EVALUASI PERFORMA TIM OLAHRAGA
+# CABANG OLAHRAGA BULU TANGKIS
+
+# BAGIAN 1: EVALUASI KONDISI FISIK (Percabangan)
+
+print(f"{'='*12} EVALUASI KONDISI FISIK {'='*12}")
+
+# Input data kesehatan atlet
+detak_jantung = int(input("Detak Jantung Istirahat (Bpm) : "))
+sistolik      = int(input("Tekanan Darah Sistolik (MmHg) : "))
+diastolik     = int(input("Tekanan Darah Diastolik(MmHg) : "))
+vo2max        = float(input("VO2Max                        : "))
+imt           = float(input("IMT                           : "))
+# Klasifikasi Detak Jantung
+if detak_jantung < 60:
+    status_dj = "Bradikardia"
+elif detak_jantung <= 100:
+    status_dj = "Normal"
+else:
+    status_dj = "Takikardia"
+# Klasifikasi Tekanan Darah
+if sistolik < 120 and diastolik < 80:
+    status_td = "Normal"
+elif sistolik < 130 and diastolik < 80:
+    status_td = "Prehipertensi"
+elif sistolik < 140 or diastolik < 90:
+    status_td = "Hipertensi Level 1"
+else:
+    status_td = "Hipertensi Level 2"
+# Klasifikasi VO2Max
+if vo2max < 28:
+    status_vo2 = "Sangat Buruk"
+elif vo2max < 34:
+    status_vo2 = "Buruk"
+elif vo2max < 42:
+    status_vo2 = "Cukup"
+elif vo2max < 52:
+    status_vo2 = "Baik"
+elif vo2max < 60:
+    status_vo2 = "Sangat Baik"
+else:
+    status_vo2 = "Superior"
+# Klasifikasi IMT
+if imt < 18.5:
+    status_imt = "Underweight"
+elif imt < 25.0:
+    status_imt = "Normal"
+elif imt < 30.0:
+    status_imt = "Overweight"
+else:
+    status_imt = "Obesitas"
+# Tampilkan
+print(f"{'Detak Jantung Istirahat':<24}: {detak_jantung} Bpm → {status_dj}")
+print(f"{'Tekanan Darah':<24}: {sistolik}/{diastolik} → {status_td}")
+print(f"{'VO2Max':<24}: {vo2max:<6} → {status_vo2}")
+print(f"{'IMT':<24}: {imt:<6} → {status_imt}")
+# BAGIAN 2: PROGRES LATIHAN LARI (Loop)
+
+print(f"{'='*8} PROGRES LATIHAN LARI MINGGUAN {'='*9}")
+
+nama_hari  = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"]
+data_lari  = []  # List untuk menyimpan (jarak, waktu)
+
+print("Masukkan data lari 7 hari (ketik 0 untuk hari istirahat):")
+
+# For loop untuk input 7 hari
+for i in range(7):
+    hari = nama_hari[i]
+    jarak = float(input(f"  [{hari}] Jarak (km) : "))
+    if jarak == 0:
+        waktu = 0
+    else:
+        waktu = int(input(f"  [{hari}] Waktu (menit) : "))
+    data_lari.append((jarak, waktu))
+# Hitung statistik
+total_jarak  = sum(d[0] for d in data_lari)
+total_waktu  = sum(d[1] for d in data_lari)
+jarak_list   = [d[0] for d in data_lari if d[0] > 0]
+rata_pace    = (total_waktu / total_jarak) if total_jarak > 0 else 0
+hari_terbaik = data_lari.index(max(data_lari, key=lambda x: x[0]))
+# Tampilkan tabel
+print("-"*48)
+print(f"{'Hari':<4} | {'Jarak':>5}  |  {'Waktu':>5}  | {'Pace':<6} | Grafik")
+print(f"{'-'*5}|{'-'*8}|{'-'*9}|{'-'*8}|{'-'*14}")
+
+for i, (jarak, waktu) in enumerate(data_lari):
+    hari = nama_hari[i]
+    if jarak == 0:
+        pace_str = "REST"
+        bar      = "🏖"
+    else:
+        pace     = waktu / jarak
+        pace_str = f"{pace:.2f}"
+        bar_len  = int(jarak * 2)
+        bar      = "🟦" * bar_len
+        if i == hari_terbaik:
+            bar += " 🏆"
+    print(f"{hari:<4} | {jarak:>4.1f}km | {waktu:>4}min | {pace_str:<6} | {bar}")
+print("-"*48)
+
+print(f"\nTotal Jarak: {total_jarak:.1f} km | Rata-rata Pace: {rata_pace:.2f} min/km")
+print("=" * 48)
+# BAGIAN 3: DATABASE TIM (Struktur Data)
+
+print("=" * 6 + "  DATABASE TIM OLAHRAGA  " + "=" * 6)
+
+# LIST: Daftar skor pertandingan
+skor_pertandingan = []
+print("Masukkan skor pertandingan tim (ketik -1 untuk selesai):")
+while True:
+    skor = int(input("  Skor: "))
+    if skor == -1:
+        break
+    skor_pertandingan.append(skor)
+
+skor_pertandingan.sort(reverse=True)
+print(f"📋 Skor (sorted): {skor_pertandingan}")
+print(f"   Max: {max(skor_pertandingan)} | Min: {min(skor_pertandingan)}")
+# DICTIONARY: Profil lengkap atlet
+profil_atlet = {}
+for i, (nama_a, tgl_lahir, posisi_a) in enumerate(atlet_tuple):
+    usia_a  = int(input(f"  Atlet '{nama_a}' - Usia   : "))
+    skor_a  = int(input(f"  Atlet '{nama_a}' - Skor   : "))
+    profil_atlet[nama_a] = {
+        "usia"      : usia_a,
+        "posisi"    : posisi_a,
+        "statistik" : {"skor": skor_a, "tgl_lahir": tgl_lahir}
+    }
+# SET: Cabang olahraga unik
+cabang_set_1 = set(input("\nCabang olahraga Tim A (pisah koma): ").split(","))
+cabang_set_2 = set(input("Cabang olahraga Tim B (pisah koma): ").split(","))
+cabang_set_1 = {c.strip() for c in cabang_set_1}
+cabang_set_2 = {c.strip() for c in cabang_set_2}
+irisan_cabang = cabang_set_1 & cabang_set_2
+# Tampilkan Database
+print()
+for nama_a, profil in profil_atlet.items():
+    skor_a  = profil['statistik']['skor']
+    usia_a  = profil['usia']
+    pos_a   = profil['posisi']
+    print(f"👤 {nama_a} → {pos_a:<8} | Skor: {skor_a} | Usia: {usia_a}")
+
+print(f"\n🥇 Cabang (irisan Tim A & B): {irisan_cabang}")
+# Rata-rata skor & pemain terbaik dari dictionary
+semua_skor  = [p['statistik']['skor'] for p in profil_atlet.values()]
+rata_skor   = sum(semua_skor) / len(semua_skor)
+top_player  = max(profil_atlet, key=lambda n: profil_atlet[n]['statistik']['skor'])
+top_skor    = profil_atlet[top_player]['statistik']['skor']
+
+print(f"📊 Rata-rata Skor: {rata_skor:.2f} | Top: {top_player} ({top_skor})")
+print("=" * 48)
