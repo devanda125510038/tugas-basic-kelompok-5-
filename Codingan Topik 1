@@ -1,1 +1,89 @@
-print("hallo dunia")
+# SISTEM PROFIL & ZONA LATIHAN ATLET
+# CABANG OLAHRAGA BULU TANGKIS
+
+print("=" * 48)
+print(" SISTEM PROFIL & ZONA LATIHAN ATLET BULU TANGKIS")
+print("=" * 48)
+
+# BAGIAN 1: INPUT DATA PROFIL ATLET
+
+nama            = input("Masukkan Nama Atlet        : ")
+usia            = int(input("Masukkan Usia (Tahun)      : "))
+tinggi_badan    = float(input("Masukkan Tinggi Badan (Cm) : "))
+berat_badan     = float(input("Masukkan Berat Badan (Kg)  : "))
+cabang_olahraga = input("Masukkan Cabang Olahraga   : ")
+# BAGIAN 2: VARIABEL & OPERATOR - PERHITUNGAN
+
+# Konversi tinggi ke meter
+tinggi_m = tinggi_badan / 100
+# Hitung IMT menggunakan operator aritmatika
+IMT = berat_badan / (tinggi_m ** 2)
+# Hitung rasio berat-tinggi
+rasio_bt = berat_badan / tinggi_badan
+# Tentukan kategori IMT menggunakan operator perbandingan
+if IMT < 18.5:
+    kategori_imt = "Underweight"
+elif IMT < 25.0:
+    kategori_imt = "Normal"
+elif IMT < 30.0:
+    kategori_imt = "Overweight"
+else:
+    kategori_imt = "Obesitas"
+# Hitung HRmax dan zona latihan
+HRmax         = 220 - usia
+zona_ringan   = 0.50 * HRmax
+zona_sedang   = 0.70 * HRmax
+zona_berat    = 0.85 * HRmax
+# BAGIAN 3: TAMPILKAN PROFIL ATLET
+
+print(f"{'='*9} PROFIL & ZONA LATIHAN ATLET {'='*10}")
+print("-" * 48)
+print(f"{'Nama':<20}: {nama}")
+print(f"{'Usia':<20}: {usia} tahun")
+print(f"{'Tinggi Badan':<20}: {tinggi_badan:.0f} cm")
+print(f"{'Berat Badan':<20}: {berat_badan:.0f} kg")
+print(f"{'Cabang Olahraga':<20}: {cabang_olahraga}")
+print("-" * 48)
+print(f"{'IMT':<20}: {IMT:.2f} → {kategori_imt}")
+print(f"{'Rasio B/T':<20}: {rasio_bt:.2f}  → {status_rasio}")
+print(f"{'HRmax':<20}: {HRmax} bpm")
+print("-" * 48)
+print(f"{'Zona Latihan'}")
+print(f"{'- Ringan (50%)':<20}: {zona_ringan:.2f} bpm")
+print(f"{'- Sedang (70%)':<20}: {zona_sedang:.2f} bpm")
+print(f"{'- Berat  (85%)':<20}: {zona_berat:.2f} bpm")
+print("-" * 48)
+
+# BAGIAN 4: INPUT/OUTPUT INTERAKTIF - SESI LATIHAN
+
+print(f"{'='*13} INPUT LATIHAN HARIAN {'='*13}")
+jumlah_sesi = 3  # minimal 3 sesi latihan
+sesi_latihan = []
+
+for i in range(1, jumlah_sesi + 1):
+    print(f"\nSesi Latihan ke-{i}")
+    jenis  = input(f"- Jenis Latihan       : ")
+    durasi = int(input(f"- Durasi (Menit)      : "))
+    kalori = float(input(f"- Kalori (Kkal)       : "))
+    hr     = int(input(f"- Detak Jantung (Bpm) : "))
+    sesi_latihan.append((jenis, durasi, kalori, hr))
+# Hitung total dan rata-rata
+total_durasi = sum(s[1] for s in sesi_latihan)
+total_kalori = sum(s[2] for s in sesi_latihan)
+rata_kalori = total_kalori / jumlah_sesi
+hr_tertinggi = max(s[3] for s in sesi_latihan)
+# TAMPILKAN TABEL RINGKASAN LATIHAN
+
+print(f"{'='*11} RINGKASAN LATIHAN HARIAN {'='*11}")
+print("-"*48)
+print(f" {'No'} | {'Jenis Latihan'} | {'Durasi'} | {'Kalori'} | {'HR (bpm)'}")
+print(f"{'-'*4}|{'-'*15}|{'-'*8}|{'-'*8}|{'-'*9}")
+
+for idx, (jenis, durasi, kalori, hr) in enumerate(sesi_latihan, start=1):
+    print(f" {idx:<3}| {jenis:<13} |{durasi:>4} m  |{kalori:>5.0f}   | {hr:>5}")
+
+print("-"*48)
+print(f"{'Total Durasi':<20}: {total_durasi} menit")
+print(f"{'Rata-rata Kalori':<20}: {rata_kalori:.2f} kkal")
+print(f"{'HR Tertinggi':<20}: {hr_tertinggi} bpm")
+print("="*48)
