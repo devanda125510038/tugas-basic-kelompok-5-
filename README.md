@@ -1,2 +1,2 @@
-
-
+basicc
+pemrograman
